@@ -26,4 +26,17 @@ app.get('/json', (req, res) => {
     }
 })
 
+app.use((req, res, next)=>{
+    var string = `${req.method} ${req.path} ${req.ip}`;
+    console.log(string);
+    next();
+});
+
+app.get('/now', (req, res, next)=>{
+    req.time = new Date().toString();
+    next();
+}, (req, res)=>{
+    res.json({"time": req.time});
+})
+
 module.exports = app;
